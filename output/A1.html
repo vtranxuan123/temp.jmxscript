@@ -1,0 +1,370 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="/resources/css/reset.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    <script src="/resources/js/jquery.min.js"></script>
+    <title>じぶん書店</title>
+    
+
+
+    
+    
+
+    
+
+
+
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
+
+<link rel="apple-touch-icon" href="/resources/images//favicon_16x16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="/resources/images//favicon_32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/resources/images//favicon_152x152.png" sizes="152x152">
+<link rel="apple-touch-icon" href="/resources/images//favicon_192x192.png" sizes="192x192">
+<!-- Win8 tile -->
+<meta name="msapplication-TileImage" content="/resources/images//favicon_152x152.png">
+<meta name="msapplication-TileColor" content="#B20099"/>
+<meta name="application-name" content="name"/>
+
+
+
+</head>
+<body>
+<div class="container">
+    
+
+
+
+
+
+
+
+
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
+
+<link rel="apple-touch-icon" href="/resources/images//favicon_16x16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="/resources/images//favicon_32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/resources/images//favicon_152x152.png" sizes="152x152">
+<link rel="apple-touch-icon" href="/resources/images//favicon_192x192.png" sizes="192x192">
+<!-- Win8 tile -->
+<meta name="msapplication-TileImage" content="/resources/images//favicon_152x152.png">
+<meta name="msapplication-TileColor" content="#B20099"/>
+<meta name="application-name" content="name"/>
+
+
+
+<script src="/resources/js/jquery-1.12.4.min.js"></script>
+<script src="/resources/js/jquery.cookie.js"></script>
+<script src="/resources/js/bootstrap-popup.js"></script>
+<link rel="stylesheet"
+      href="/resources/css/popup.css"
+      type="text/css">
+<script src="/resources/js/main.js"></script>
+<script src="/resources/js/user/ajax_following.js"></script>
+<script src="/resources/js/readmore.min.js"></script>
+<link rel="stylesheet" href="/resources/css/hashtag.css" type="text/css">
+<script src="/resources/js/date.js"></script>
+<script src="/resources/js/user/paging_helper.js"></script>
+
+<script src="/resources/js/jquery.validate.min.js"></script>
+<script src="/resources/js/messages_ja.js"></script>
+<script src="/resources/js/validate_setting.js"></script>
+<script src="/resources/js/jquery.dotdotdot.min.js"></script>
+<script src="/resources/js/cutString.js"></script>
+
+<style>
+    <!--
+    .box-1x141:before {
+        padding-top: 0;
+    }
+
+    .box-1x141-before {
+        padding-top: 141%;
+    }
+
+    .img_box:only-child {
+        width: 100%;
+        height: 100%;
+    }
+
+    .special_img_box .inner,
+    .specialIssue_img_box .inner,
+    .specialList_img_box .inner {
+        position: inherit;
+    }
+
+    .change_btn {
+        margin: 0;
+        width: 48%;
+        white-space: nowrap;
+        padding: 0;
+    }
+
+    -->
+</style>
+<script>
+    const HASH_TAG_ENTITY_TYPE_BOOKGROUP = 1;
+    const HASH_TAG_ENTITY_TYPE_PERMIT_SUGGEST = 2;
+    $(document).ready(function () {
+        updateHashTagLink();
+        groupImageProcess();
+    });
+
+    function groupImageProcess() {
+        $('.box-1x141').each(function () {
+            var box = $(this);
+            var imgBox = box.find('.img_box');
+            var img = box.find('img');
+            var inner = box.find('.inner');
+            if (imgBox.length == 1) {
+                var src = img.attr("src");
+                img.attr("src", src.substring(0, src.length - 4) + "_480");
+            }
+            if (inner.children().length == 2 && box.children().length == 1) {
+                box.prepend('<div class="box-1x141-before" ></div>');
+                inner.css("position", "absolute");
+
+            }
+        })
+    }
+
+    function updateHashTagLink() {
+        $('.hash_tag').unbind('click');
+        $('.hash_tag').bind('click', function (e) {
+            e.preventDefault();
+            var entityType = $(this).attr('entity_type');
+            if (entityType && entityType.trim() != '') {
+                var tag = $(this).attr('href');
+                var contextPath = '';
+            }
+            window.location.href = contextPath + '/top/search?keyword=%23' + tag.replace('#', '') + '&targetStoreId=' + getCurrentStoreId();
+        });
+    }
+</script>
+
+<script>
+    function clickSearch() {
+        var param = jQuery.param({targetStoreId: getCurrentStoreId()});
+        window.location.href = "/top/filterSearch?" + param;
+    }
+
+    function getCurrentStoreId() {
+        var url = window.location.href;
+        var pattern = /\/bookstore\/(\S+)/;
+        var match = pattern.exec(url);
+        if (match != null) {
+            return match[1].substring(0, 8);
+        } else {
+            return "";
+        }
+    }
+</script>
+
+<div class="header_box">
+    <header class="cf">
+        
+            
+            
+            
+                
+                <h1 class="title_logo">
+                    <a href="/top" style="margin-left: 35%">
+                        <img src="/resources/images/img_logo.jpg" />
+                        <span class="display_none">じぶん書店</span>
+                    </a>
+                </h1>
+            
+        
+    </header>
+</div>
+
+    <div class="main_box header_margin header_padding second_bg_color">
+        <div class="addresschange">
+            <section>
+                <h1><img src="/resources/images/title_book.png"/><span
+                        class="display_none">新規書店開設</span></h1>
+                <div class="addresschange_text margin_bottom">
+                    <p>ご入力頂いたメールアドレス宛に認証番号を送信いたしました。以下より登録をお願い致します。</p>
+                </div>
+                <form id="createStoreForm" action="/bookstore/createNewBookStore" method="POST">
+                    <ul class="profilechange_form_box margin_bottom">
+                        <li class="text">
+                            <p>認証番号<span class="required">必須</span>
+                                <br/><span class="text_s">(数字4桁)</span></p>
+                        </li>
+                        <li class="form">
+                            <input id="confirmationCode" name="confirmationCode" type="number" value=""/>
+                            <input id="base64AvatarImage" name="base64AvatarImage" type="hidden" value="/avatarPath/gasVzCrY/userImg"/>
+                            <input id="avatarPath" name="avatarPath" type="hidden" value="/avatarPath/gasVzCrY/userImg"/>
+                            <input id="nickname" name="nickname" type="hidden" value="store1"/>
+                            <input id="birthYear" name="birthYear" type="hidden" value="1990"/>
+                            <input id="userEmail" name="userEmail" type="hidden" value="abc1@gmail.com"/>
+                            <input id="emailConfirmation" name="emailConfirmation" type="hidden" value="abc1@gmail.com"/>
+                            <input id="password" name="password" type="hidden" value="123456"/>
+                            <input id="passwordConfirmation" name="passwordConfirmation" type="hidden" value="123456"/>
+                            <input id="userIntroduction" name="userIntroduction" type="hidden" value="Test user introduction only"/>
+                            <input id="storeName" name="storeName" type="hidden" value="store name 1"/>
+                            <input id="storeIntroduction" name="storeIntroduction" type="hidden" value="Test store introduction only"/>
+                            <input id="referStoreId" name="referStoreId" type="hidden" value=""/>
+                        </li>
+                    </ul>
+                    <div class="change_btn_box margin_bottom">
+                        <button type="submit" class="send_btn btn_m btn_default">登録</button>
+                    </div>
+                </form>
+                <div class="change_btn_box margin_bottom">
+                    <p class="margin_bottom">メールが届かなかった場合はお手数ですがもう一度やり直してください。
+                        <a id="resend-email-code" style="color: #00a4e1"
+                           href="/confirmationEmail/resend" data-code-id="230">再送信</a>
+                        <span id="resend-email-status" style="color: #00a4e1; font-style: italic" hidden>処理中</span></p>
+                    <button type="submit" id="btn-back" name="redo" class="send_btn btn_m btn_primary">戻る</button>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+<link rel="stylesheet"
+      href="/resources/css/font-awesome/css/font-awesome.min.css">
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        html {
+            background-color: #333333 !important;
+        }
+    </style>
+</head>
+<footer>
+    <div class="footer_box">
+        <p class="footer_text_box footer_text_style text_s">Copyright<i class="fa fa-copyright" style="font-size: 10px;"
+                                                                        aria-hidden="true"></i>2017
+            じぶん書店 All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-step step-1">
+        <div class="modal-content step">
+            <button type="button" class="close close-step" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body modal-body-step">
+                <div class="text-wrap-modal">
+                    <p class="text-step">Step 1</p>
+                </div>
+                <div class="img-container">
+                    <div class="img-popup-wrap">
+                        <img src="/resources/images/popup/1.png" class="img-step" alt="Image">
+                    </div>
+                    <div class="img-popup-wrap">
+                        <img src="/resources/images/popup/2.png" class="img-step" alt="Image">
+                    </div>
+                </div>
+                <p>書店を開くボタンを押して登録</p>
+            </div>
+            <div class="modal-footer modal-footer-step">
+                <button type="button" class="btn btn-mediado btn-next">NEXT<i class="fa fa-caret-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-step step-2">
+        <div class="modal-content step">
+            <button type="button" class="close close-step" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body modal-body-step">
+                <div class="text-wrap-modal">
+                    <p class="text-step">Step 2</p>
+                </div>
+                <div class="img-container">
+                    <div class="img-popup-wrap">
+                        <img src="/resources/images/popup/3.png" class="img-step" alt="Image">
+                    </div>
+                </div>
+                <p>お気に入りの本を<br>
+                    じぶん書店に並べよう！</p>
+            </div>
+            <div class="modal-footer modal-footer-step">
+                <button type="button" class="btn btn-mediado btn-next">NEXT<i class="fa fa-caret-right" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-step step-3">
+        <div class="modal-content step">
+            <button type="button" class="close close-step" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-body modal-body-step">
+                <div class="text-wrap-modal">
+                    <p class="text-step">Step 3</p>
+                </div>
+                <div class="img-container">
+                    <div class="img-popup-wrap">
+                        <img src="/resources/images/popup/4.png" class="img-step" alt="Image">
+                    </div>
+                    <div class="img-popup-wrap">
+                        <img src="/resources/images/popup/5.png" class="img-step" alt="Image">
+                    </div>
+                </div>
+                <p>本が売れたらポイントバック。<br>
+                    そのポイントでまた本が買えます。</p>
+            </div>
+            <div class="modal-footer modal-footer-step">
+                <button type="button"
+                        onclick="window.location.href='/bookstore/createNewBookStore'"
+                        class="btn btn-mediado">書店を作る<i class="fa fa-caret-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModalNotify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-step step-3">
+        <div class="modal-content step">
+            <button type="button" class="close close-step" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-header">
+                <h4 class="modal-title">じぶん書店</h4>
+            </div>
+            <div class="modal-body">
+                <h2>認証番号を送信しました。</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal"
+                        class="btn btn-mediado">Close<i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btn-back").click(function (e) {
+        e.preventDefault();
+        window.location.href = "/bookstore/createNewBookStore#preview";
+    });
+</script>
+</body>
+
+</html>
+
